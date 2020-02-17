@@ -1,4 +1,4 @@
-# DBaaS - MySQL Operator in multi tenant mode mode
+# DBaaS - MySQL Operator for multi tenant mode 
 
 ### Deploy Oracle MySQL Operator
 
