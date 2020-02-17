@@ -1,0 +1,52 @@
+apiVersion: pxc.percona.com/v1-3-0
+kind: PerconaXtraDBCluster
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"pxc.percona.com/v1-3-0","kind":"PerconaXtraDBCluster"}
+  name: cluster2
+  finalizers:
+    - delete-pxc-pods-in-order
+spec:
+  secretsName: my-cluster-secrets
+  sslSecretName: my-cluster-ssl
+  sslInternalSecretName: my-cluster-ssl-internal
+  allowUnsafeConfigurations: true
+  pxc:
+    size: 1
+    image: percona/percona-xtradb-cluster-operator:1.3.0-pxc
+    resources:
+      requests:
+        memory: 1G
+        cpu: 600m
+    podDisruptionBudget:
+      maxUnavailable: 1
+    volumeSpec:
+      emptyDir: {}
+    gracePeriod: 600
+  proxysql:
+    enabled: false
+    size: 3
+    image: percona/percona-xtradb-cluster-operator:1.3.0-proxysql
+    resources:
+      requests:
+        memory: 1G
+        cpu: 600m
+    affinity:
+      antiAffinityTopologyKey: "kubernetes.io/hostname"
+
+      persistentVolumeClaim:
+        resources:
+          requests:
+            storage: 2Gi
+    podDisruptionBudget:
+      maxUnavailable: 1
+    gracePeriod: 30
+  pmm:
+    enabled: false
+    image: percona/percona-xtradb-cluster-operator:1.3.0-pmm
+    serverHost: monitoring-service
+    serverUser: pmm
+  backup:
+    enabled: false
+    image: percona/percona-xtradb-cluster-operator:1.3.0-backup

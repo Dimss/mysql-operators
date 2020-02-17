@@ -1,0 +1,6 @@
+apiVersion: mysql.oracle.com/v1alpha1
+kind: Cluster
+metadata:
+  name: my-app-db
+spec:
+  members: 1
