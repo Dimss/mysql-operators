@@ -15,7 +15,6 @@ oc create -f operator-cluster-role.yaml
 oc create -f mysql-agent-cluster-role.yaml
 # Create ClusterRoleBindings
 oc create -f operator-cluster-role-bindings.yaml
-
 # Deploy CRD
 oc create -f crds.yaml
 # Deploy Operator
