@@ -2,7 +2,6 @@
 
 ### Deploy Oracle MySQL Operator
 
-Deploy 
 ```bash
 
 # Create NS
