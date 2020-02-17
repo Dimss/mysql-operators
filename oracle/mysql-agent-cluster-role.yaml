@@ -31,6 +31,8 @@ rules:
       - mysqlclusters/finalizers
       - mysqlrestores
     verbs:
+      - create
+      - delete
       - get
       - list
       - patch
