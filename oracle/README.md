@@ -50,11 +50,11 @@ kind: ServiceAccount
 metadata:
   name: mysql-agent
 ```
-5.Login as system:admin and create `RoleBinding` for `mysql-agent` and `<USER>`
+5.Login as `system:admin` and create `RoleBinding` for `mysql-agent` and `<USER>`
 ```bash
 oc login -u system:admin
 ``` 
-and create the RoleBindings for the `mysql-agent` and `<USER>` 
+Create the RoleBindings for the `mysql-agent` and `<USER>` 
 ```yaml
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -72,7 +72,7 @@ subjects:
     name: <USER>
     namespace: <PROJECT>
 ```
-6.Allow `anyuid` policy for `mysql-agent` ServiceAccount (still as system:admin) 
+6.Allow `anyuid` policy for `mysql-agent` ServiceAccount (still as `system:admin`) 
 ```bash
 oc adm policy add-scc-to-user anyuid -z mysql-agent -n <PROJECT>
 ```
