@@ -34,7 +34,6 @@ spec:
         cpu: 600m
     affinity:
       antiAffinityTopologyKey: "kubernetes.io/hostname"
-
       persistentVolumeClaim:
         resources:
           requests:

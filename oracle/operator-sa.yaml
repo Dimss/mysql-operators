@@ -3,9 +3,3 @@ kind: ServiceAccount
 metadata:
   name: mysql-operator
   namespace: mysql-operator
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: mysql-agent
-  namespace: mysql-operator
