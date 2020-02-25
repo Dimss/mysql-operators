@@ -1,0 +1,12 @@
+apiVersion: "v1"
+kind: Template
+metadata:
+  name: db-test
+  namespace: openshift
+objects:
+- apiVersion: mysql.oracle.com/v1
+  kind: MySQLCluster
+  metadata:
+    name: my-app-db
+  spec:
+    members: 1

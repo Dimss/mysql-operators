@@ -1,0 +1,46 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: mysql-operator
+metadata:
+  annotations:
+    description: MySQL Operator
+    iconClass: icon-mysql-database
+    openshift.io/display-name: MySQL Operator
+    openshift.io/provider-display-name: BNHP.
+    tags: database,mysql
+  name: mysql-operator
+  namespace: openshift
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: mysql-agent
+- apiVersion: rbac.authorization.k8s.io/v1beta1
+  kind: RoleBinding
+  metadata:
+    name: mysql-agent
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: mysql-agent
+  subjects:
+    - kind: ServiceAccount
+      name: mysql-agent
+- apiVersion: mysql.oracle.com/v1alpha1
+  kind: Cluster
+  metadata:
+    name: my-app-db
+  spec:
+    members: 1
+parameters:
+  - description: The name of the MySQL Cluster
+    displayName: MySQL Cluster Name
+    name: CLUSTER_NAME
+    required: true
+    value: mysql
+  - description: Number of members in the MySQL cluster.
+    displayName: MySQL Cluster Size
+    name: MYSQL_MEMBERS
+    required: true
+    value: "1"
