@@ -7,16 +7,13 @@ metadata:
     chart: mysql-operator-0.2.1
 spec:
   group: mysql.oracle.com
-  scope: Cluster
-  names:
-    kind: Cluster
-    singular: cluster
-    plural: mysqlclusters
   version: v1alpha1
-  versions:
-    - name: v1alpha1
-      served: true
-      storage: true
+  scope: Namespaced
+  names:
+    kind:
+
+    singular: mysqlcluster
+    plural: mysqlclusters
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -27,16 +24,12 @@ metadata:
     chart: mysql-operator-0.2.1
 spec:
   group: mysql.oracle.com
-  scope: Cluster
+  version: v1alpha1
+  scope: Namespaced
   names:
     kind: Backup
     singular: mysqlbackup
     plural: mysqlbackups
-  version: v1alpha1
-  versions:
-    - name: v1alpha1
-      served: true
-      storage: true
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -47,16 +40,12 @@ metadata:
     chart: mysql-operator-0.2.1
 spec:
   group: mysql.oracle.com
-  scope: Cluster
+  version: v1alpha1
+  scope: Namespaced
   names:
     kind: Restore
     singular: mysqlrestore
     plural: mysqlrestores
-  version: v1alpha1
-  versions:
-    - name: v1alpha1
-      served: true
-      storage: true
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -67,13 +56,9 @@ metadata:
     chart: mysql-operator-0.2.1
 spec:
   group: mysql.oracle.com
-  scope: Cluster
+  version: v1alpha1
+  scope: Namespaced
   names:
     kind: BackupSchedule
     singular: mysqlbackupschedule
     plural: mysqlbackupschedules
-  version: v1alpha1
-  versions:
-    - name: v1alpha1
-      served: true
-      storage: true
