@@ -1,0 +1,64 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: bnhp-self-service-mysql-ephemeral-template
+message: |-
+  The following MySQL clusters have been created in your project: ${CLUSTER_NAME}.
+
+         Username: root
+   Connection URL: mysql://${CLUSTER_NAME}:3306/
+
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false
+    description: |-
+      MySQL database cluster service, without persistent storage.
+
+      WARNING: All data stored will be lost upon pod destruction. Only use this template for testing.
+    iconClass: icon-bnhp-mysql
+    openshift.io/display-name: BNHP Self-Service MySQL (Ephemeral)
+    openshift.io/long-description: This template provides a MySQL cluster created by the MySQL operator.
+      The database is not stored on persistent storage,
+      so any restart of the service will result in all data being lost.  The database
+      cluster name and number of cluster members are chosen via parameters when provisioning this
+      service.
+    openshift.io/provider-display-name: the Docker Community and the MySQL Team
+    openshift.io/support-url: https://github.com/docker-library/mysql/issues
+    tags: database,mysql
+  name: bnhp-self-service-mysql-ephemeral
+  namespace: openshift
+objects:
+  - apiVersion: mysql.oracle.com/v1
+    kind: MySQLCluster
+    metadata:
+      name: ${CLUSTER_NAME}
+    spec:
+      replicas: 1
+  - apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: ${CLUSTER_NAME}-init-job
+    spec:
+      template:
+        spec:
+          serviceAccountName: mysql-agent
+          restartPolicy: Never
+          backoffLimit: 10
+          containers:
+            - name: db-init
+              imagePullPolicy: Always
+              image: ${DB_INIT_IMAGE}
+              env:
+                - name: CLUSTER_NAME
+                  value: ${CLUSTER_NAME}
+parameters:
+  - description: The name of the MySQL Cluster
+    displayName: MySQL Cluster Name
+    name: CLUSTER_NAME
+    required: true
+    value: myappdb
+  - description: DB init docker image
+    displayName: DB init docker image
+    name: DB_INIT_IMAGE
+    required: true
+    value: docker.io/dimssss/mysql-op-db-init:0.1

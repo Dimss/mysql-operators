@@ -1,0 +1,36 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  creationTimestamp: "2020-03-01T09:49:11Z"
+  name: project-request
+  namespace: default
+  resourceVersion: "292845"
+  selfLink: /apis/template.openshift.io/v1/namespaces/default/templates/project-request
+  uid: e765d413-5ba1-11ea-9c42-0612f92fe8bc
+objects:
+
+  - apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: mysql-agent
+  - apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: RoleBinding
+    metadata:
+      name: mysql-agent
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: mysql-agent
+    subjects:
+      - kind: ServiceAccount
+        name: mysql-agent
+        namespace: ${PROJECT_NAME}
+
+
+
+parameters:
+  - name: PROJECT_NAME
+  - name: PROJECT_DISPLAYNAME
+  - name: PROJECT_DESCRIPTION
+  - name: PROJECT_ADMIN_USER
+  - name: PROJECT_REQUESTING_USER
