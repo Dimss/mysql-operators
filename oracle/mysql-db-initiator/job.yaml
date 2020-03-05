@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: op-db-init
+spec:
+  template:
+    spec:
+      serviceAccountName: mysql-agent
+      restartPolicy: Never
+      backoffLimit: 10
+      containers:
+        - name: op-db-init
+          imagePullPolicy: Always
+          image: docker.io/dimssss/mysql-op-db-init:0.1
+          env:
+            - name: "MYSQL_CR_NAME"
+              value: myappdb
+
+
+
+

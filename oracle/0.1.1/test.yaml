@@ -1,6 +1,6 @@
 apiVersion: mysql.oracle.com/v1
 kind: MySQLCluster
 metadata:
-  name: my-app-db
+  name: myappdb
 spec:
-  replicas: 3
+  replicas: 1 
